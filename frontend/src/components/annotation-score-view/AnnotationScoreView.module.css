@@ -1,0 +1,40 @@
+.root {
+  padding: 24px 12px;
+  background-color: var(--primary-black-color);
+  border-radius: var(--border-radius-primary);
+  box-shadow: var(--boxshadow-main);
+}
+
+.card {
+  background-color: var(--background-color);
+  padding: 32px 24px;
+  border-radius: var(--border-radius-primary);
+  box-shadow: var(--boxshadow-main);
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 100%;
+  background-color: var(--table-row-primary-color);
+  box-shadow: var(--boxshadow-secondary);
+}
+
+.gridRow {
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+
+.gridRow:nth-child(odd) {
+  background-color: var(--table-row-secondary-color);
+}
+
+.gridRow:hover {
+  color: var(--primary-color);
+  background-color: var(--highlight-background);
+}
+
+.gridItem {
+  text-align: left;
+  padding: 16px;
+  border: 1px solid #777;
+}

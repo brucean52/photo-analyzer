@@ -1,0 +1,41 @@
+.container {
+  padding-left: 8px;
+  overflow-y: auto;
+  width: 70px;
+  max-height: calc(100vh - 58px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--background-color) var(--primary-black-color);
+}
+
+.imageList {
+  margin-top: 38px;
+}
+
+.imageItem, .selectedImageItem {
+  border: 2px solid var(--primary-black-color);
+  border-radius: 4px;
+  background-color: transparent;
+  position: relative;
+  margin: 2px 0;
+}
+
+.imageItem {
+  opacity: 0.25;
+}
+
+.imageItem:hover, .selectedImageItem:hover  {
+  border-color: var(--primary-color);
+  opacity: 1;
+  cursor: pointer;
+}
+
+.selectedImageItem {
+  opacity: 1;
+  border-color: var(--highlight-color-yellow);
+}
+
+.pngImg {
+  background-image: url('/images/png-background.png');
+  background-size: cover;
+  background-position: center;
+}

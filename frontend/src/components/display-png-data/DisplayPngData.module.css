@@ -1,0 +1,38 @@
+.root {
+  background-color: var(--background-color);
+  padding: 32px 32px 48px 32px;
+  margin: 12% 24px 16px 24px;
+  border-radius: var(--border-radius-primary);
+  box-shadow: var(--boxshadow-main);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-black-color) var(--background-color);
+}
+
+.title {
+  margin-top: 0;
+  margin-left: 8px;
+}
+
+.table {
+  border-collapse: collapse;
+  box-shadow: var(--boxshadow-main)
+}
+
+.tableBody > tr > td {
+  padding: 16px 12px 12px 12px;
+  border-bottom: 1px solid var(--border-light-color);
+}
+
+.tableBody > tr:nth-child(odd) {
+  background-color: var(--table-row-secondary-color);
+}
+
+.tableBody > tr:nth-child(even) {
+  background-color: var(--table-row-primary-color);
+}
+
+.tableBody > tr:hover {
+  background-color: var(--highlight-background);
+  color: var(--primary-color);
+}

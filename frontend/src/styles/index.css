@@ -1,0 +1,11 @@
+body {
+  background-color: var(--background-color);
+  margin: 0;
+  font-family: var(--font-app);
+  color: var(--text-color);
+  font-optical-sizing: auto;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
