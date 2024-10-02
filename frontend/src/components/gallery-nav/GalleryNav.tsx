@@ -1,10 +1,12 @@
 import clsx from 'clsx';
 import Tooltip from '../tooltip/Tooltip';
 import { useAppStore } from '../../store/UseAppStore';
+import { useWindowDimensions } from '../../hooks/useWindowDimensions';
 import styles from './GalleryNav.module.css'
 
 const GalleryNav = () => {
   const { selectedPhotoIndex, photosArray, setPhotoArrayIndex } = useAppStore();
+  const { winWidth } = useWindowDimensions();
 
   const renderPhotoList = photosArray.map((photo, index) => {
     const normalizedWidth: number = 50;
@@ -22,11 +24,14 @@ const GalleryNav = () => {
           width: `${normalizedWidth}px`,
           height: `${normalizedHeight}px`
         }}
-        onClick={() => setPhotoArrayIndex(index)}
+        onClick={() => setPhotoArrayIndex(index, winWidth > 1575 ? false : true)}
       >
         <Tooltip text={photo.filename} placement="right">
           <img
-            className={`${styles.img} ${Object.hasOwn(photo, 'pngInfo') && styles.pngImg}`}
+            className={clsx({
+              [styles.img]: true,
+              [styles.pngImg]: Object.hasOwn(photo, 'pngInfo')
+            })}
             srcSet={`${photo.src} 2x`}
             src={photo.src}
             alt={photo.filename}

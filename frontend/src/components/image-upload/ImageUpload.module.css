@@ -112,6 +112,10 @@
   .gridContainer {
     display: block;
   }
+
+  .errorContainer {
+    justify-content: center;
+  }
 }
 
 @media (max-device-width: 750px) {

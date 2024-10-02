@@ -5,7 +5,7 @@ export type AppState = {
   photosArray: any[];
   toggleLeftSidebar: () => void;
   toggleRightSidebar: () => void;
-  setPhotoArrayIndex: (index: number | null) => void;
+  setPhotoArrayIndex: (index: number | null, isMobile: boolean) => void;
   addPhoto: (photo: any) => void;
   reset: () => void;
 }

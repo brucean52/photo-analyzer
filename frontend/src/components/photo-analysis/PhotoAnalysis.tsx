@@ -35,7 +35,7 @@ const PhotoAnalysis = () => {
       let calcWidth: number = 0;
       let calcHeight: number = 0;
       
-      if (aspectRatio > 1) {
+      if (aspectRatio >= 1) {
         switch(true) {
           case winWidth > 1850: 
             calcWidth = winWidth * 0.35;

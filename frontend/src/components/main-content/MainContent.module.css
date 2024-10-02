@@ -52,7 +52,7 @@
 .headerSection {
   display: flex;
   justify-content: space-between;
-  margin: 24px 5% 0 1%;
+  margin: 24px 5% 0 2%;
 }
 
 .headerClosedLeftSidebar {
@@ -60,7 +60,7 @@
 }
 
 .mobileHeader {
-  margin-left: 1%;
+  margin-left: 2%;
 }
 
 .filenameIcon {

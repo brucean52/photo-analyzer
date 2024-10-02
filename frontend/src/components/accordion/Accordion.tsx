@@ -23,7 +23,13 @@ const Accordion = (props: AccordionProps) => {
         onClick={() => setIsOpen((prevState) => !prevState)}
       >
         <div className={styles.title}>{props.title}</div>
-        <IconChevronDown size={30} className={`${styles.icon} ${isOpen && styles.rotate}`}/> 
+        <IconChevronDown 
+          size={30}
+          className={clsx({
+            [styles.icon]: true,
+            [styles.rotate]: isOpen
+          })}
+        /> 
       </div>
       <AnimatePresence initial={false}>
         {isOpen && (

@@ -6,6 +6,7 @@ import ExifReader from 'exifreader';
 import { IconLoader2, IconAlertCircle } from '@tabler/icons-react';
 import visionIcon from '../../assets/cloud_vision_api.svg';
 import { useAppStore } from '../../store/UseAppStore';
+import { useWindowDimensions } from '../../hooks/useWindowDimensions';
 import { FileInfo, ImageDimensions } from '../../types';
 import styles from './ImageUpload.module.css';
 
@@ -13,6 +14,7 @@ const ImageUpload = () => {
   const { openLeftSidebar, addPhoto, setPhotoArrayIndex } = useAppStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const { winWidth } = useWindowDimensions();
 
   const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -141,14 +143,14 @@ const ImageUpload = () => {
         width: dimensions.width,
         height: dimensions.height
       });
-      setPhotoArrayIndex(0);
+      setPhotoArrayIndex(0, winWidth > 1575 ? false : true);
     } catch (error) {
       console.error('Error uploading file:', error);
       setErrorMessage('Error uploading file');
     } finally {
       setIsLoading(false);
     }
-  }, [addPhoto, setPhotoArrayIndex]);
+  }, [addPhoto, setPhotoArrayIndex, winWidth]);
 
   const {getRootProps, getInputProps} = useDropzone({    
     accept: {

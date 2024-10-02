@@ -18,9 +18,9 @@ export const useAppStore = create<AppState>((set) => ({
       openRightSidebar: !state.openRightSidebar
     })),
 
-  setPhotoArrayIndex: (index) =>
+  setPhotoArrayIndex: (index, isMobile) =>
     set((state) => ({
-      openRightSidebar: state.selectedPhotoIndex === null ? true : state.openRightSidebar,
+      openRightSidebar: state.selectedPhotoIndex === null && !isMobile ? true : state.openRightSidebar,
       selectedPhotoIndex: index,
     })),
 
