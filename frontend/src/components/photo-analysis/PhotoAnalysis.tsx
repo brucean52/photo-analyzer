@@ -7,7 +7,12 @@ import { useWindowDimensions } from '../../hooks/useWindowDimensions';
 import { usePreviousIndexValue } from '../../hooks/usePreviousIndexValue';
 import { useAppStore } from '../../store/UseAppStore';
 import { Photo } from '../../types';
-import { defaultPhoto, HIGHLIGHT_BLUE, HIGHLIGHT_GREEN } from '../../assets/defaultData';
+import {
+  defaultPhoto,
+  defaultRenderTabsMap,
+  HIGHLIGHT_BLUE,
+  HIGHLIGHT_GREEN
+} from '../../assets/defaultData';
 import styles from './PhotoAnalysis.module.css';
 
 const PhotoAnalysis = () => {
@@ -18,7 +23,7 @@ const PhotoAnalysis = () => {
   const [photo, setPhoto] = useState<Photo>(defaultPhoto);
   const [imgDimensions, setImgDimensions] = useState({width: 0, height: 0});
   const [tabIndex, setTabIndex] = useState<number>(0);
-  const [hasObjects, setHasObjects] = useState<boolean>(true);
+  const [renderTabsMap, setRenderTabsMap] = useState(defaultRenderTabsMap);
   const [hoveredObjIndex, setHoveredObjIndex] = useState<number | null>(null);
   const prevHoveredObjIndex = usePreviousIndexValue(hoveredObjIndex);
 
@@ -31,7 +36,7 @@ const PhotoAnalysis = () => {
     if (selectedPhotoIndex !== null) {
       const photo: Photo = photosArray[selectedPhotoIndex]
       const aspectRatio: number = photo.width / photo.height;
-      let photoHasObjects: boolean = true;
+      const tabMap = {...defaultRenderTabsMap};
       let calcWidth: number = 0;
       let calcHeight: number = 0;
       
@@ -57,14 +62,28 @@ const PhotoAnalysis = () => {
 
       if (
         Object.hasOwn(photo.vision, 'localizedObjectAnnotations')
-        && photo.vision["localizedObjectAnnotations"].length === 0
+        && photo.vision["localizedObjectAnnotations"].length > 0
       ) {
-        photoHasObjects = false;
+        tabMap.objects = true;
       }
-      
+
+      if (
+        Object.hasOwn(photo.vision, 'logoAnnotations')
+        && photo.vision["logoAnnotations"].length > 0
+      ) {
+        tabMap.logos = true;
+      }
+
+      if (
+        Object.hasOwn(photo.vision, 'landmarkAnnotations')
+        && photo.vision["landmarkAnnotations"].length > 0
+      ) {
+        tabMap.landmarks = true;
+      }
+
       clearCanvas();
       setTabIndex(0);
-      setHasObjects(photoHasObjects);
+      setRenderTabsMap(tabMap);
       setImgDimensions({width: calcWidth, height: calcHeight});
       setPhoto(photo)
     } else {
@@ -78,14 +97,24 @@ const PhotoAnalysis = () => {
     const canvas = canvasRef.current;
     const ctx = canvas !== null && canvas.getContext('2d');
 
-    const coordsArr = object['boundingPoly']['normalizedVertices']
+    const coordsArr = object['boundingPoly']['normalizedVertices'].length > 0 
+    ? object['boundingPoly']['normalizedVertices']
+    : object['boundingPoly']['vertices'];
     const xArr = coordsArr.map(coord => coord.x);
     const yArr = coordsArr.map(coord => coord.y);
 
-    const x = Math.min(...xArr) * imgDimensions.width;
-    const xMax = Math.max(...xArr) * imgDimensions.width;
-    const y = Math.min(...yArr) * imgDimensions.height;
-    const yMax = Math.max(...yArr) * imgDimensions.height;
+    const calcWidth = object['boundingPoly']['normalizedVertices'].length > 0 
+    ? imgDimensions.width
+    : (imgDimensions.width / photo.width);
+
+    const calcHeight = object['boundingPoly']['normalizedVertices'].length > 0 
+    ? imgDimensions.height
+    : (imgDimensions.height / photo.height);
+
+    const x = Math.min(...xArr) * calcWidth;
+    const xMax = Math.max(...xArr) * calcWidth;
+    const y = Math.min(...yArr) * calcHeight;
+    const yMax = Math.max(...yArr) * calcHeight;
 
     const boxWidth  = xMax - x;
     const boxHeight = yMax - y;
@@ -97,35 +126,43 @@ const PhotoAnalysis = () => {
       ctx.strokeRect(x, y, boxWidth, boxHeight);
       ctx.restore();
     }
-  }, [imgDimensions]);
+  }, [imgDimensions, photo.height, photo.width]);
 
-  const drawCanvasBoxes = () => {
-    if (photo.vision["localizedObjectAnnotations"].length) {
-      const canvas = canvasRef.current;
-      const ctx = canvas !== null && canvas.getContext('2d');
+  const drawCanvasBoxes = (annotationsArr) => {
+    const canvas = canvasRef.current;
+    const ctx = canvas !== null && canvas.getContext('2d');
 
-      photo.vision["localizedObjectAnnotations"].forEach((object) => {
-        const coordsArr = object['boundingPoly']['normalizedVertices']
-        const xArr = coordsArr.map(coord => coord.x);
-        const yArr = coordsArr.map(coord => coord.y);
-    
-        const x = Math.min(...xArr) * imgDimensions.width;
-        const xMax = Math.max(...xArr) * imgDimensions.width;
-        const y = Math.min(...yArr) * imgDimensions.height;
-        const yMax = Math.max(...yArr) * imgDimensions.height;
-    
-        const boxWidth  = xMax - x;
-        const boxHeight = yMax - y;
+    annotationsArr.forEach((object) => {
+      const coordsArr = object['boundingPoly']['normalizedVertices'].length > 0 
+        ? object['boundingPoly']['normalizedVertices']
+        : object['boundingPoly']['vertices'];
+      const xArr = coordsArr.map(coord => coord.x);
+      const yArr = coordsArr.map(coord => coord.y);
 
-        if (ctx) {
-          ctx.save();
-          ctx.lineWidth = 4;
-          ctx.strokeStyle = HIGHLIGHT_GREEN;
-          ctx.strokeRect(x, y, boxWidth, boxHeight);
-          ctx.restore();
-        }
-      });
-    }
+      const calcWidth = object['boundingPoly']['normalizedVertices'].length > 0 
+      ? imgDimensions.width
+      : (imgDimensions.width / photo.width);
+
+      const calcHeight = object['boundingPoly']['normalizedVertices'].length > 0 
+      ? imgDimensions.height
+      : (imgDimensions.height / photo.height);
+  
+      const x = Math.min(...xArr) * calcWidth;
+      const xMax = Math.max(...xArr) * calcWidth;
+      const y = Math.min(...yArr) * calcHeight;
+      const yMax = Math.max(...yArr) * calcHeight;
+  
+      const boxWidth  = xMax - x;
+      const boxHeight = yMax - y;
+
+      if (ctx) {
+        ctx.save();
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = HIGHLIGHT_GREEN;
+        ctx.strokeRect(x, y, boxWidth, boxHeight);
+        ctx.restore();
+      }
+    });
   }
 
   const clearCanvas = () => {
@@ -137,10 +174,19 @@ const PhotoAnalysis = () => {
   }
 
   const handleTabClick = (index: number) => {
-    if (index === 1) {
-      drawCanvasBoxes();
-    } else {
-      clearCanvas();
+    clearCanvas();
+    switch(index) {
+      case 1:
+        drawCanvasBoxes(photo.vision["localizedObjectAnnotations"]);
+        break;
+      case 2:
+        drawCanvasBoxes(photo.vision["logoAnnotations"]);
+        break;
+      case 3:
+        drawCanvasBoxes(photo.vision["landmarkAnnotations"]);
+        break;
+      default:
+        break;
     }
     setTabIndex(index);
   }
@@ -152,6 +198,22 @@ const PhotoAnalysis = () => {
 
     if (tabIndex === 1 && hoveredObjIndex !== null) {
       drawCanvasBoxHovered(photo.vision["localizedObjectAnnotations"][hoveredObjIndex], HIGHLIGHT_BLUE);
+    }
+
+    if (tabIndex === 2 && prevHoveredObjIndex !== null) {
+      drawCanvasBoxHovered(photo.vision["logoAnnotations"][prevHoveredObjIndex], HIGHLIGHT_GREEN);
+    }
+
+    if (tabIndex === 2 && hoveredObjIndex !== null) {
+      drawCanvasBoxHovered(photo.vision["logoAnnotations"][hoveredObjIndex], HIGHLIGHT_BLUE);
+    }
+
+    if (tabIndex === 3 && prevHoveredObjIndex !== null) {
+      drawCanvasBoxHovered(photo.vision["landmarkAnnotations"][prevHoveredObjIndex], HIGHLIGHT_GREEN);
+    }
+
+    if (tabIndex === 3 && hoveredObjIndex !== null) {
+      drawCanvasBoxHovered(photo.vision["landmarkAnnotations"][hoveredObjIndex], HIGHLIGHT_BLUE);
     }
   }, [hoveredObjIndex, drawCanvasBoxHovered, photo.vision, tabIndex, prevHoveredObjIndex]);
 
@@ -170,10 +232,21 @@ const PhotoAnalysis = () => {
         <Tab
           className={clsx({
             [styles.activeTab]: tabIndex === 1,
-            [styles.disabledTab]: !hasObjects
+            [styles.disabledTab]: !renderTabsMap.objects
           })}
-          disabled={!hasObjects}
         >Objects</Tab>
+        <Tab
+          className={clsx({
+            [styles.activeTab]: tabIndex === 2,
+            [styles.disabledTab]: !renderTabsMap.logos
+          })}
+        >Logos</Tab>
+        <Tab
+          className={clsx({
+            [styles.activeTab]: tabIndex === 3,
+            [styles.disabledTab]: !renderTabsMap.landmarks
+          })}
+        >Landmarks</Tab>
       </TabList>
 
       <div className={styles.mainContainer}>
@@ -222,6 +295,38 @@ const PhotoAnalysis = () => {
           >
             <AnnotationScoreView
               annotations={photo.vision["localizedObjectAnnotations"]}
+              setHoveredObjIndex={setHoveredObjIndex}
+            />
+          </motion.div>
+        </TabPanel>
+
+        <TabPanel>
+          <motion.div
+            className={styles.panelContain}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={tabPanelVariants}
+            transition={{ duration: 0.3 }}
+          >
+            <AnnotationScoreView
+              annotations={photo.vision["logoAnnotations"]}
+              setHoveredObjIndex={setHoveredObjIndex}
+            />
+          </motion.div>
+        </TabPanel>
+
+        <TabPanel>
+          <motion.div
+            className={styles.panelContain}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={tabPanelVariants}
+            transition={{ duration: 0.3 }}
+          >
+            <AnnotationScoreView
+              annotations={photo.vision["landmarkAnnotations"]}
               setHoveredObjIndex={setHoveredObjIndex}
             />
           </motion.div>

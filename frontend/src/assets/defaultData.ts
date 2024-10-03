@@ -309,3 +309,8 @@ export const exifGpsInfoTableRows = [
   }
 ];
 
+export const defaultRenderTabsMap = {
+  objects: false,
+  logos: false,
+  landmarks: false
+}

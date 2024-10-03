@@ -13,10 +13,10 @@ export const analyzeImage = async (imageBuffer) => {
         features: [
           { type: 'OBJECT_LOCALIZATION' },
           { type: 'LABEL_DETECTION' },
+          { type: 'LOGO_DETECTION' },
+          { type: 'LANDMARK_DETECTION' },
           // { type: 'TEXT_DETECTION' },
           // { type: 'FACE_DETECTION' },
-          // { type: 'LOGO_DETECTION' },
-          // { type: 'LANDMARK_DETECTION' },
           // { type: 'SAFE_SEARCH_DETECTION' },
           // { type: 'WEB_DETECTION' },
         ],

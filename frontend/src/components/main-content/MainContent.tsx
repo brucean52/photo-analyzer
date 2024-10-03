@@ -11,9 +11,17 @@ const MainContent = () => {
     selectedPhotoIndex,
     photosArray,
     openLeftSidebar,
+    openRightSidebar,
+    toggleRightSidebar,
     reset
   } = useAppStore();
   const { winWidth } = useWindowDimensions();
+
+  const handleRootClick = () => {
+    if (openRightSidebar && winWidth < 1575) {
+      toggleRightSidebar();
+    }
+  }
 
   return (
     <div
@@ -22,6 +30,7 @@ const MainContent = () => {
         [styles.rootLeftSidebar]: openLeftSidebar,
         [styles.mobileRoot]: winWidth < 1000
       })}
+      onClick={() => handleRootClick()}
     >
       <section
         className={clsx({

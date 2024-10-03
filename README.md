@@ -4,20 +4,19 @@
 
 ## Description
 
-A fullstack app that integrates the Google Vision API, and extracts image meta data. Built with React, TypeScript, and Framer Motion.
+A fullstack app that integrates the Google Vision API, and extracts image (Exif) meta data. Built with React, TypeScript, Framer Motion, Node, Express, and Multer.
 
 ![Alt text](https://github.com/brucean52/photo-analyzer/blob/master/sample_images/objects.png "objects")
 ![Alt text](https://github.com/brucean52/photo-analyzer/blob/master/sample_images/upload.png "upload")
+![Alt text](https://github.com/brucean52/photo-analyzer/blob/master/sample_images/logos.png "logos")
 
 ## Installation and Setup
 
-In the project directory, you can run:
-
 ### 1. Google Vision API service key
-Obtain a service key for the Google Vision API. The `/backend/src/config/index.js` references the key filename as `google-key.json`
+Obtain a service key for the Google Vision API. The `/backend/src/config/index.js` file references the key filename as `google-key.json`
 
 ### 2. System configuration setup
-Create a .env file in the frontend folders using the .env.example file.
+Create a .env file in the frontend folder using the .env.example file as a reference.
 
 ### 3. `npm install` 
 Required in the root directory in order to concurrently run both frontend and backend folders.

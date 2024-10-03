@@ -37,11 +37,8 @@
   color: var(--primary-color);
 }
 
-.tabList > li.disabledTab, .tabList > li.disabledTab:hover {
-  user-select: none;
-  cursor: not-allowed;
-  background-color: var(--table-row-primary-color);
-  color: rgba(255, 255, 255, 0.3); 
+.tabList > li.disabledTab {
+  display: none;
 }
 
 .panelContain {
@@ -92,5 +89,9 @@
   .mainContainer {
     flex-direction: column;
     align-items: center;
+  }
+
+  .tabList {
+    margin-top: 16px;
   }
 }
