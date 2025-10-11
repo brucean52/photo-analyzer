@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { IconRestore, IconFileInfo } from '@tabler/icons-react';
 import PhotoAnalysis from '../photo-analysis/PhotoAnalysis';
 import Tooltip from '../tooltip/Tooltip';
-import { useAppStore } from '../../store/UseAppStore';
+import { useAppStore } from '../../store/AppStore';
 import { useWindowDimensions } from '../../hooks/useWindowDimensions';
 import styles from './MainContent.module.css';
 

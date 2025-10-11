@@ -6,8 +6,9 @@ import {
   IconLayoutSidebarRightCollapseFilled,
   IconLayoutSidebarRightExpandFilled,
 } from '@tabler/icons-react';
+import githubLogo from '../../assets/logos/github-mark-white.png';
 import Tooltip from '../tooltip/Tooltip';
-import { useAppStore } from '../../store/UseAppStore';
+import { useAppStore } from '../../store/AppStore';
 import styles from './AppHeader.module.css';
 
 const AppHeader = () => {
@@ -82,7 +83,7 @@ const AppHeader = () => {
               className={styles.githubBtn}
             >
               <a href="https://github.com/brucean52/photo-analyzer" target="_blank" rel="noreferrer">
-                <img src="/logos/github-mark-white.png" width={24} height={24}/>
+                <img src={githubLogo} width={24} height={24}/>
               </a>
             </button>
           </Tooltip>

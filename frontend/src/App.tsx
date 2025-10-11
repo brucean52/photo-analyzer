@@ -6,7 +6,7 @@ import ImageUpload from './components/image-upload/ImageUpload';
 import DisplayExifData from './components/display-exif-data/DisplayExifData';
 import DisplayPngData from './components/display-png-data/DisplayPngData';
 import MainContent from './components/main-content/MainContent';
-import { useAppStore } from './store/UseAppStore';
+import { useAppStore } from './store/AppStore';
 import styles from './App.module.css';
 
 const App = () => {
@@ -36,7 +36,7 @@ const App = () => {
   };
 
   return (
-    <main>
+    <div>
       <AppHeader/>
       <section className={styles.section}>
 
@@ -74,7 +74,7 @@ const App = () => {
         </AnimatePresence>
 
       </section>
-    </main>
+    </div>
   );
 };
 

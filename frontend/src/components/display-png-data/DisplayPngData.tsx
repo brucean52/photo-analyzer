@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAppStore } from '../../store/UseAppStore';
+import { useAppStore } from '../../store/AppStore';
 import { PngInfo } from '../../types';
 import { defaultPngInfo, pngInfoTableRows } from '../../assets/defaultData';
 import styles from './DisplayPngData.module.css';

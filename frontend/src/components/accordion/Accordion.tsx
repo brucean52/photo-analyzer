@@ -4,12 +4,12 @@ import clsx from 'clsx';
 import { IconChevronDown } from '@tabler/icons-react';
 import styles from './Accordion.module.css';
 
-type AccordionProps = {
+type Props = {
   title: string;
   children: ReactNode;
 };
 
-const Accordion = (props: AccordionProps) => {
+const Accordion = (props: Props) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (

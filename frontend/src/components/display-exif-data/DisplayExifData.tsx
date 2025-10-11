@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Accordion from '../accordion/Accordion';
-import { useAppStore } from '../../store/UseAppStore';
+import { useAppStore } from '../../store/AppStore';
 import { ExifInfo } from '../../types';
 import {
   defaultExifInfo,

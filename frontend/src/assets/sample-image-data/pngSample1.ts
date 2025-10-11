@@ -1,4 +1,5 @@
 import { PngInfo, Photo } from "../../types";
+import pngSample1 from '../images/png_sample_1.png';
 
 const vision = {
   faceAnnotations: [],
@@ -523,7 +524,7 @@ const pngInfo: PngInfo = {
 
 export const pngSamplePhoto1: Photo = {
   filename: "png_sample_1.png",
-  src: "/images/png_sample_1.png",
+  src: pngSample1,
   pngInfo,
   vision,
   height: 600,

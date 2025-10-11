@@ -3,9 +3,10 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import AnnotationScoreView from '../annotation-score-view/AnnotationScoreView';
+import TextAnnotationView from '../text-annotation-view/TextAnnotationView';
 import { useWindowDimensions } from '../../hooks/useWindowDimensions';
 import { usePreviousIndexValue } from '../../hooks/usePreviousIndexValue';
-import { useAppStore } from '../../store/UseAppStore';
+import { useAppStore } from '../../store/AppStore';
 import { Photo } from '../../types';
 import {
   defaultPhoto,
@@ -79,6 +80,14 @@ const PhotoAnalysis = () => {
         && photo.vision["landmarkAnnotations"].length > 0
       ) {
         tabMap.landmarks = true;
+      }
+
+      if (
+        Object.hasOwn(photo.vision, 'textAnnotations')
+        && photo.vision["textAnnotations"].length > 0
+      ) {
+        console.log('photo.vision', photo.vision);
+        tabMap.text = true;
       }
 
       clearCanvas();
@@ -185,6 +194,9 @@ const PhotoAnalysis = () => {
       case 3:
         drawCanvasBoxes(photo.vision["landmarkAnnotations"]);
         break;
+      case 4:
+        drawCanvasBoxes(photo.vision["textAnnotations"]);
+        break;
       default:
         break;
     }
@@ -214,6 +226,14 @@ const PhotoAnalysis = () => {
 
     if (tabIndex === 3 && hoveredObjIndex !== null) {
       drawCanvasBoxHovered(photo.vision["landmarkAnnotations"][hoveredObjIndex], HIGHLIGHT_BLUE);
+    }
+
+    if (tabIndex === 4 && prevHoveredObjIndex !== null) {
+      drawCanvasBoxHovered(photo.vision["textAnnotations"][prevHoveredObjIndex], HIGHLIGHT_GREEN);
+    }
+
+    if (tabIndex === 4 && hoveredObjIndex !== null) {
+      drawCanvasBoxHovered(photo.vision["textAnnotations"][hoveredObjIndex], HIGHLIGHT_BLUE);
     }
   }, [hoveredObjIndex, drawCanvasBoxHovered, photo.vision, tabIndex, prevHoveredObjIndex]);
 
@@ -247,6 +267,12 @@ const PhotoAnalysis = () => {
             [styles.disabledTab]: !renderTabsMap.landmarks
           })}
         >Landmarks</Tab>
+        <Tab
+          className={clsx({
+            [styles.activeTab]: tabIndex === 4,
+            [styles.disabledTab]: !renderTabsMap.text
+          })}
+        >Text</Tab>
       </TabList>
 
       <div className={styles.mainContainer}>
@@ -327,6 +353,22 @@ const PhotoAnalysis = () => {
           >
             <AnnotationScoreView
               annotations={photo.vision["landmarkAnnotations"]}
+              setHoveredObjIndex={setHoveredObjIndex}
+            />
+          </motion.div>
+        </TabPanel>
+
+        <TabPanel>
+          <motion.div
+            className={styles.panelContain}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={tabPanelVariants}
+            transition={{ duration: 0.3 }}
+          >
+            <TextAnnotationView
+              annotations={photo.vision["textAnnotations"]}
               setHoveredObjIndex={setHoveredObjIndex}
             />
           </motion.div>

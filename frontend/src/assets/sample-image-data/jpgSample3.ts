@@ -1,4 +1,5 @@
 import { ExifInfo, Photo } from "../../types";
+import imageSample3 from '../images/jpg_sample_3.jpg';
 
 const vision = {
   faceAnnotations: [],
@@ -15167,7 +15168,7 @@ const exifInfo: ExifInfo = {
 
 export const jpgSamplePhoto3: Photo = {
   filename: "jpg_sample_3.jpg",
-  src: "/images/jpg_sample_3.jpg",
+  src: imageSample3,
   exifInfo,
   vision,
   height: 4080,

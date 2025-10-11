@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { client } from '../config/index.js';
 
 export const analyzeImage = async (imageBuffer) => {
@@ -15,7 +14,7 @@ export const analyzeImage = async (imageBuffer) => {
           { type: 'LABEL_DETECTION' },
           { type: 'LOGO_DETECTION' },
           { type: 'LANDMARK_DETECTION' },
-          // { type: 'TEXT_DETECTION' },
+          { type: 'TEXT_DETECTION' },
           // { type: 'FACE_DETECTION' },
           // { type: 'SAFE_SEARCH_DETECTION' },
           // { type: 'WEB_DETECTION' },

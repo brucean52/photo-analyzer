@@ -12,7 +12,7 @@
 }
 
 .imageItem, .selectedImageItem {
-  border: 2px solid var(--primary-black-color);
+  border: 3px solid var(--primary-black-color);
   border-radius: 4px;
   background-color: transparent;
   position: relative;
@@ -24,18 +24,18 @@
 }
 
 .imageItem:hover, .selectedImageItem:hover  {
-  border-color: var(--primary-color);
+  border-color: var(--highlight-color-green);
   opacity: 1;
   cursor: pointer;
 }
 
 .selectedImageItem {
   opacity: 1;
-  border-color: var(--highlight-color-yellow);
+  border-color: var(--primary-color);
 }
 
 .pngImg {
-  background-image: url('/images/png-background.png');
+  background-image: url('../../assets/images/png-background.png');
   background-size: cover;
   background-position: center;
 }

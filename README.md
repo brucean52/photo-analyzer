@@ -9,6 +9,7 @@ A fullstack app that integrates the Google Vision API, and extracts image (Exif)
 ![Alt text](https://github.com/brucean52/photo-analyzer/blob/master/sample_images/objects.png "objects")
 ![Alt text](https://github.com/brucean52/photo-analyzer/blob/master/sample_images/upload.png "upload")
 ![Alt text](https://github.com/brucean52/photo-analyzer/blob/master/sample_images/logos.png "logos")
+![Alt text](https://github.com/brucean52/photo-analyzer/blob/master/sample_images/text.png "text")
 
 ## Installation and Setup
 
@@ -24,14 +25,14 @@ Required in the root directory in order to concurrently run both frontend and ba
 ### 4. `npm run install-all`
 Installs the necessary modules for both the frontend and backend directories to run the application.
 
-### `npm start` or `npm run dev`
+### 5. `npm start` or `npm run dev`
 Runs the app in development mode.
 Client: [http://localhost:5173/](http://localhost:5173/)
 Server: [http://localhost:3000/](http://localhost:3000/)
 
-### Front End Directory
+
 ### `npm run build`
-Creates a production build of the app in the dist directory
+Creates a production build of the app in the dist directories for both frontend and backend
 
 ## References
 

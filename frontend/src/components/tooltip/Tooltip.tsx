@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import styles from './Tooltip.module.css';
 
-type TooltipProps = {
+type Props = {
   text: string;
   offsetX?: number;
   offsetY?: number;
@@ -11,7 +11,7 @@ type TooltipProps = {
   children: ReactNode;
 }
 
-const Tooltip = (props: TooltipProps) => {
+const Tooltip = (props: Props) => {
   const {
     text,
     offsetX = 0,

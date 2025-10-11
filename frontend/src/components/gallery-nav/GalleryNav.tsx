@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Tooltip from '../tooltip/Tooltip';
-import { useAppStore } from '../../store/UseAppStore';
+import { useAppStore } from '../../store/AppStore';
 import { useWindowDimensions } from '../../hooks/useWindowDimensions';
 import styles from './GalleryNav.module.css'
 
